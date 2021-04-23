@@ -1,7 +1,7 @@
 syntax = "proto3";
 package pb;
 
-option go_package = "github.com/akolybelnikov/grpc-vault";
+option go_package = "github.com/akolybelnikov/grpcvault";
 
 service Vault {
   rpc Hash(HashRequest) returns (HashResponse) {}
