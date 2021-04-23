@@ -1,4 +1,4 @@
-module grpcvault
+module github.com/akolybelnikov/grpcvault
 
 go 1.14
 
