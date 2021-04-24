@@ -2,7 +2,7 @@ package grpcvault
 
 import (
 	"context"
-	"github.com/akolybelnikov/grpcvault/pb"
+	pb "github.com/akolybelnikov/grpcvault/pb"
 	grpctransport "github.com/go-kit/kit/transport/grpc"
 )
 
