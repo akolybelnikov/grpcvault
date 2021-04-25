@@ -43,7 +43,7 @@ type Service interface {
 	Validate(ctx context.Context, password, hash string) (bool, error)
 }
 
-// Endpoints Go kit endpoints and implements Service interface. 
+// Endpoints Go kit endpoints and implements Service interface.
 type Endpoints struct {
 	HashEndpoint     endpoint.Endpoint
 	ValidateEndpoint endpoint.Endpoint

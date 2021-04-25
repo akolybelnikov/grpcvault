@@ -82,4 +82,3 @@ func DecodeGRPCValidateResponse(ctx context.Context, r interface{}) (interface{}
 	res := r.(*pb.ValidateResponse)
 	return validateResponse{Valid: res.Valid}, nil
 }
-
