@@ -5,6 +5,8 @@ import (
 	"fmt"
 	vault "github.com/akolybelnikov/grpcvault"
 	pb "github.com/akolybelnikov/grpcvault/pb"
+	"github.com/go-kit/kit/ratelimit"
+	"golang.org/x/time/rate"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -12,6 +14,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func main() {
@@ -28,8 +31,11 @@ func main() {
 		errChan <- fmt.Errorf("%s", <-c)
 	}()
 
-	hashEndpoint := vault.MakeHashEndpoint(srv)
-	validateEndpoint := vault.MakeValidateEndpoint(srv)
+	limit := rate.NewLimiter(rate.Every(time.Second), 5)
+
+	hashEndpoint := ratelimit.NewDelayingLimiter(limit)(vault.MakeHashEndpoint(srv))
+	validateEndpoint := ratelimit.NewDelayingLimiter(limit)(vault.MakeValidateEndpoint(srv))
+
 	endpoints := vault.Endpoints{HashEndpoint: hashEndpoint, ValidateEndpoint: validateEndpoint}
 
 	// HTTP transport
